@@ -40,6 +40,9 @@ def main():
 	# Create an ntScalar of type 'ubyte'
 	pvaServer.addRecord('pvUByte', ntScalar(UBYTE))
 
+	# Create an ntScalar of type 'string array'
+	# Note that all that is required to define an array is encapsulating the type in brackets.
+	pvaServer.addRecord('pvStringArray', ntScalar([STRING]))
 
 	# Print the record names if '-v' is given
 	if '-v' in sys.argv:
