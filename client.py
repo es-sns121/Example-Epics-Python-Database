@@ -17,7 +17,7 @@ def main():
 	print 'timeStamp:', pv['timeStamp']
 
 	# Write to the value field of 'pv'
-	# All writes work like this. For boolean just replace the number with True or False
+	# All numeric writes work like this. For boolean just replace the number with True or False
 	# For strings, just pass the string you want to be written as the first argument.
 	channel.put(32, 'field(value)')
 
@@ -47,7 +47,16 @@ def main():
 	
 	# Write the array (just a list. Note that you can alternatively use numpy arrays.) 
 	# See http://epics-pvdata.sourceforge.net/docbuild/pvaPy/tip/pvaccess.html#pvaccess.PvObject for more info on using numpy arrays
+	
+	# It's important to note here that if you first write a list of 5 items, and then write a list of 2 items, an exception will be
+	# thrown. This is due to the partial update of an array not being implemented. If you write a list of 1 item, and then a list of
+	# 2 items, no exception will be thrown. The error only occurs when making partial updates, overwritting lists of smaller size
+	# does not cause error.
+
 	channel.put(["What's the meaning of life?", "Not asking stupid questions."])
+
+	# ERROR
+	# channel.put(["blah"])
 
 	# Retrieve the string array
 	pv = channel.get('field(value)')
