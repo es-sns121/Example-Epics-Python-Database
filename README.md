@@ -10,9 +10,10 @@
 
 ## Prerequisites
 
-	- Valid build of EPICS v4, note that pvaPy **must** be built. As of this writing, 26/7/2017,
+	- Valid build of EPICS v4, note that pvaPy must be built. As of this writing, 26/7/2017,
 	EPICS v4 is at version 4.6.0.
-	- Valid installation of python 2. These applications were written and run with version 2.6.
+	- Valid installation of python 2. These applications were written and run with python 
+	version 2.6.
 	
 ## Running
 	- To run the database simply type 
