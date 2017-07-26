@@ -14,10 +14,10 @@ def _help():
 def ntScalar(scalar_type):
 
 	pv = PvObject(
-		{'value'     : scalar_type,			# Add a field of the specified type, name the field 'value'
-		 'alarm'     : PvAlarm(),			# Add an alarm structure, name the field 'alarm'
-		 'timeStamp' : PvTimeStamp()},		# Add a timestamp structure, name the field 'timeStamp'
-		 'epics:nt/NTScalar:1.0')			# Name the structure.
+		{'value'     : scalar_type,		# Add a field of the specified type, name the field 'value'
+		 'alarm'     : PvAlarm(),		# Add an alarm structure, name the field 'alarm'
+		 'timeStamp' : PvTimeStamp()},	# Add a timestamp structure, name the field 'timeStamp'
+		 'epics:nt/NTScalar:1.0')		# Name the structure.
 
 	return pv
 
