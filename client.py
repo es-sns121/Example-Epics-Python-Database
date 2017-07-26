@@ -22,7 +22,7 @@ def main():
 	channel.put(32, 'field(value)')
 
 	# Observe the changed value
-	pv = channel.get('field(value)')
+	pv = channel.get('field()')
 
 	print '\n', pv
 
