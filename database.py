@@ -1,14 +1,16 @@
 #! /usr/bin/env python
 
-import sys
+from sys import argv, exit
 from pvaccess import *
 
 # Prints usage information and exits
 def _help():
+	
 	print 'usage: database [-v / -h]'
 	print '\t-v : verbose. prints record names.'
 	print '\t-h : help. prints help information.'
-	sys.exit(0)
+	exit(0)
+
 
 # Instantiates and initializes a PvObject that conforms to the definition of a normative type scalar structure.
 def ntScalar(scalar_type):
@@ -21,6 +23,8 @@ def ntScalar(scalar_type):
 
 	return pv
 
+
+# Adds scalar records to database
 def add_scalar_records(pva_server):
 	
 	# Create an ntScalar of type 'double'
@@ -39,20 +43,32 @@ def add_scalar_records(pva_server):
 	# Note that all that is required to define an array is encapsulating the type in brackets.
 	pva_server.addRecord('pvStringArray', ntScalar([STRING]))
 
+
+# Adds an instance of NTTable to the database.
 def add_nt_table(pva_server):
-	pass
+
+	# Table with four columns. Each column is an array of the respective type.
+	table = NtTable([STRING, INT, DOUBLE, BOOLEAN])
+	
+	# Set the column names (labels)
+	table.setLabels(['strings', 'ints', 'doubles', 'booleans'])
+
+	pva_server.addRecord('pvNTTable', table)
+
 
 def main():
 
-	if '-h' in sys.argv:
+	if '-h' in argv:
 		_help()
 
 	pva_server = PvaServer()
 
 	add_scalar_records(pva_server)
 
+	add_nt_table(pva_server)
+
 	# Print the record names if '-v' is given
-	if '-v' in sys.argv:
+	if '-v' in argv:
 		record_names = pva_server.getRecordNames()
 		print record_names
 
@@ -61,6 +77,7 @@ def main():
 		input_str = raw_input("type 'exit' to quit: ")
 		if input_str == str('exit'):
 			break
+
 
 if __name__ == '__main__':
 	main()
