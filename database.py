@@ -21,32 +21,39 @@ def ntScalar(scalar_type):
 
 	return pv
 
+def add_scalar_records(pva_server):
+	
+	# Create an ntScalar of type 'double'
+	pva_server.addRecord('pvDouble', ntScalar(DOUBLE))
+
+	# Create an ntScalar of type 'int'
+	pva_server.addRecord('pvInt', ntScalar(INT))
+
+	# Create an ntScalar of type 'boolean'
+	pva_server.addRecord('pvBoolean', ntScalar(BOOLEAN))
+
+	# Create an ntScalar of type 'ubyte'
+	pva_server.addRecord('pvUByte', ntScalar(UBYTE))
+
+	# Create an ntScalar of type 'string array'
+	# Note that all that is required to define an array is encapsulating the type in brackets.
+	pva_server.addRecord('pvStringArray', ntScalar([STRING]))
+
+def add_nt_table(pva_server):
+	pass
+
 def main():
 
 	if '-h' in sys.argv:
 		_help()
 
-	pvaServer = PvaServer()
+	pva_server = PvaServer()
 
-	# Create an ntScalar of type 'double'
-	pvaServer.addRecord('pvDouble', ntScalar(DOUBLE))
-
-	# Create an ntScalar of type 'int'
-	pvaServer.addRecord('pvInt', ntScalar(INT))
-
-	# Create an ntScalar of type 'boolean'
-	pvaServer.addRecord('pvBoolean', ntScalar(BOOLEAN))
-
-	# Create an ntScalar of type 'ubyte'
-	pvaServer.addRecord('pvUByte', ntScalar(UBYTE))
-
-	# Create an ntScalar of type 'string array'
-	# Note that all that is required to define an array is encapsulating the type in brackets.
-	pvaServer.addRecord('pvStringArray', ntScalar([STRING]))
+	add_scalar_records(pva_server)
 
 	# Print the record names if '-v' is given
 	if '-v' in sys.argv:
-		record_names = pvaServer.getRecordNames()
+		record_names = pva_server.getRecordNames()
 		print record_names
 
 	# Wait for user input to exit.
