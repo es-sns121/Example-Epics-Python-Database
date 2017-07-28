@@ -3,6 +3,7 @@
 
 from pvaccess import *
 
+
 def demonstrate_scalars():
 	"""
 	demonstrates how to operate on scalars in epics records
