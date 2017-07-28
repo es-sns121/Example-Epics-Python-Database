@@ -3,7 +3,16 @@
 
 from pvaccess import *
 
-def main():
+def demonstrate_scalars():
+	"""
+	demonstrates how to operate on scalars in epics records
+
+	performs puts and gets to observe writing data to records,
+	then printing the new value after retrieving it.
+	"""
+
+	print('\nScalar Gets and Puts to EPICS pvRecord\n')
+
 	channel = Channel('pvUByte')
 
 	# Request the entire structure.
@@ -11,7 +20,7 @@ def main():
 
 	print pv
 
-	# Access the fields of 'pv', pv is just a dict
+	# Access the fields of 'pv', pv is accessed just like a dictionary
 	print '    value:', pv['value']
 	print '    alarm:', pv['alarm']
 	print 'timeStamp:', pv['timeStamp']
@@ -36,8 +45,18 @@ def main():
 	pv = channel.get('field(alarm)')
 
 	print pv
+
+
+def demonstrate_arrays():
+	"""
+	demonstrates how to operate on arrays in epics records.
+
+	performs puts and gets to observe writing data to records,
+	then printing the new values after retrieving them.
+	"""
+
+	print('\nArray Gets and Puts to EPICS pvRecord\n')
 	
-## Handling Arrays
 	channel = Channel('pvStringArray')
 	
 	pv = channel.get('field()')
@@ -50,8 +69,8 @@ def main():
 	
 	# It's important to note here that if you first write a list of 5 items, and then write a list of 2 items, an exception will be
 	# thrown. This is due to the partial update of an array not being implemented. If you write a list of 1 item, and then a list of
-	# 2 items, no exception will be thrown. The error only occurs when making partial updates, overwritting lists of smaller size
-	# does not cause error.
+	# 2 items, no exception will be thrown. The error only occurs when making partial updates. Overwritting lists of smaller size
+	# does not cause an error.
 
 	channel.put(["What's the meaning of life?", "Not asking stupid questions."])
 
@@ -63,6 +82,44 @@ def main():
 	strings = pv['value']
 	for string in strings:
 		print string
+
+
+def demonstrate_nt_table():
+	
+	print('\nNTTable Gets and Puts to EPICS pvRecord\n')
+	
+	channel = Channel("pvNTTable")
+
+	# Retrieve the entire structure
+	pv = channel.get('field()')
+
+	# pv is currently a PvObject. To use the NTTable convenience methods, we need an NTTable.
+	table = NtTable(pv)
+
+	labels = table.getLabels()
+	col0 = table.getColumn(0)
+	col1 = table.getColumn(1)
+	col2 = table.getColumn(2)
+	col3 = table.getColumn(3)
+
+	# Print the column labels
+	for label in labels:
+		print '{0:>7}'.format(label),
+	print '\n'
+
+	# Print the column contents row by row.
+	for val0, val1, val2, val3 in zip(col0, col1, col2, col3):
+		print '{0:>7} {1:>7} {2:>7} {3:>7}'.format(val0, val1, val2, val3)
+
+
+def main():
+
+	demonstrate_scalars()
+
+	demonstrate_arrays()
+
+	demonstrate_nt_table()
+
 
 if __name__ == '__main__':
 	main()

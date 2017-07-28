@@ -3,6 +3,7 @@
 from sys import argv, exit
 from pvaccess import *
 
+
 # Prints usage information and exits
 def _help():
 	
@@ -20,6 +21,7 @@ def ntScalar(scalar_type):
 		 'alarm'     : PvAlarm(),		# Add an alarm structure, name the field 'alarm'
 		 'timeStamp' : PvTimeStamp()},	# Add a timestamp structure, name the field 'timeStamp'
 		 'epics:nt/NTScalar:1.0')		# Name the structure.
+
 
 	return pv
 
@@ -52,6 +54,12 @@ def add_nt_table(pva_server):
 	
 	# Set the column names (labels)
 	table.setLabels(['strings', 'ints', 'doubles', 'booleans'])
+	
+	# Set column data
+	table.setColumn(0, ['Hello', 'there.'])
+	table.setColumn(1, [32, 55])
+	table.setColumn(2, [1.23, 4.56])
+	table.setColumn(3, [True, False])
 
 	pva_server.addRecord('pvNTTable', table)
 
